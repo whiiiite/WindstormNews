@@ -1,0 +1,90 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using NewsApp.Extentions;
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject NewsApp.Data.NewsAppContext context;
+@inject UserManager<NewsApp.Entities.Models.User> userManager;
+@inject IViewLocalizer Localizer
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - NewsApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/NewsApp.styles.css" asp-append-version="true" />
+    @if (IsSectionDefined("AddToHead"))
+    {
+        @RenderSection("AddToHead", required: false)
+    }
+</head>
+<body>
+    @if (IsSectionDefined("AddToBody"))
+    {
+        @RenderSection("AddToBody", required: false)
+    }
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">NewsApp</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["home"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-action="Index" asp-controller="NewsArticles">@Localizer["news"]</a>
+                        </li>
+                        @if (User.IsAuthenticated() == false)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-action="SignUp" asp-controller="Users">@Localizer["signup"]</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-action="SignIn" asp-controller="Users">@Localizer["signin"]</a>
+                            </li>
+                        }
+                        else
+                        {
+                            if(await userManager.IsInRoleAsync(await context.GetUserAsync(User.Identity), "Editor"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-action="Index" asp-controller="NewsArticles">@Localizer["articles"]</a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark">@((await context?.GetUserAsync(User.Identity)).UserName)</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" asp-action="Logout" asp-controller="Users">@Localizer["signout"]</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - NewsApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

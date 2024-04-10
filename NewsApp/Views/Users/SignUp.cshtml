@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model NewsApp.Entities.ViewModels.SignUpViewModel
+@{
+    ViewData["SignUp"] = "SignUp";
+}
+@section AddToHead {
+    <link href="@Url.Content("~/css/pages-styles/common.css")" rel="stylesheet" type="text/css" />
+}
+
+<form class="common-form" asp-controller="Users" asp-action="SignUp" method="post">
+    <label>Email</label>
+    <input id="email-field" class="text-form-field" asp-for="Email" name="Email" type="email" />
+    <label>Username</label>
+    <input id="uname-field" class="text-form-field" asp-for="UserName" name="Username" type="text" />
+    <label>Password</label>
+    <input id="password-field" class="text-form-field" asp-for="Password" name="Password" type="password" />
+    <label>Confirm password</label>
+    <input id="confirm-password-field" class="text-form-field" asp-for="ConfirmPassword" name="ConfirmPassword" type="password" />
+    <input id="register-button" type='submit' value='Register' onclick="return clickSubmit()">
+    <div id="error-field" asp-validation-summary="All" class="text-danger"></div>
+</form>
+<div id="errordiv" style="color: red; display: flex; justify-content: center;"></div>
+<div class="junk"></div>
+@section Scripts {
+    <script src="~/js/Users/SignUp.js"></script>
+}
