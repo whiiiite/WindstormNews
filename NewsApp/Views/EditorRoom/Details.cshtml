@@ -10,7 +10,14 @@
 <div>
     <h4>NewsArticle</h4>
     <hr />
-    <dl class="row">
+    <dl class="column">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HeadImagePath)
+        </dt>
+        <dd class="col-sm-10">
+            <img class="o-fit-contain h-312 w-312" 
+            src="~/@Model.HeadImagePath.Replace('\\', '/').Replace("wwwroot/", "")" />
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>

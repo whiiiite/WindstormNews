@@ -123,6 +123,9 @@
   <data name="blog" xml:space="preserve">
     <value>Blog</value>
   </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="diaries" xml:space="preserve">
     <value>Diaries</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="signout" xml:space="preserve">
     <value>Sign out</value>
+  </data>
+  <data name="signout_ask" xml:space="preserve">
+    <value>Are you sure that want to sign out?</value>
   </data>
   <data name="signup" xml:space="preserve">
     <value>Sign up</value>

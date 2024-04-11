@@ -118,10 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="articles" xml:space="preserve">
-    <value>Статьи</value>
+    <value>Редакция</value>
   </data>
   <data name="blog" xml:space="preserve">
     <value>Блог</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Отмена</value>
   </data>
   <data name="diaries" xml:space="preserve">
     <value>Дневники</value>
@@ -143,6 +146,9 @@
   </data>
   <data name="signout" xml:space="preserve">
     <value>Выйти</value>
+  </data>
+  <data name="signout_ask" xml:space="preserve">
+    <value>Вы действительно хотите выйти?</value>
   </data>
   <data name="signup" xml:space="preserve">
     <value>Регистрация</value>

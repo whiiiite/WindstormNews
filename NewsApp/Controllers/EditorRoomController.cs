@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,14 +13,18 @@ using NewsApp.Data;
 using NewsApp.Entities.Models;
 using NewsApp.Entities.ViewModels;
 using NewsApp.Extentions;
+using NewsApp.Shared;
+using NewsApp.Shared.FileSystem;
 
 namespace NewsApp.Controllers
 {
-    public class NewsArticlesController : Controller
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, 
+        Roles = "Editor,ChiefEditor,Owner")]
+    public class EditorRoomController : Controller
     {
         private readonly NewsAppContext _context;
 
-        public NewsArticlesController(NewsAppContext context)
+        public EditorRoomController(NewsAppContext context)
         {
             _context = context;
         }
@@ -61,26 +67,38 @@ namespace NewsApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,TextData")] NewsArticleViewModel newsArticleVM)
+        public async Task<IActionResult> Create([FromForm]
+            NewsArticleCreateViewModel newsArticleVM)
         {
-            NewsArticle newsArticle = new NewsArticle()
+            try
             {
-                UserId = (await _context.GetUserAsync(User.Identity)).Id,
-                Title = newsArticleVM.Title,
-                TextData = newsArticleVM.TextData,
-                HeadImagePath = string.Empty,
-                CreatedDate = DateTimeOffset.UtcNow,
-                EditDate = DateTimeOffset.UtcNow,
-                IsDeleted = false
-            };
+                IFormFile headerImage = newsArticleVM.HeaderImage;
+                string saveImagePath = Path.Combine(Defaults.ArticleHeaderImagesPath, headerImage.FileName);
+                await FileHelper.CopyFileAsync(newsArticleVM.HeaderImage, saveImagePath);
 
-            if (ModelState.IsValid)
-            {
-                _context.Add(newsArticle);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                NewsArticle newsArticle = new NewsArticle()
+                {
+                    UserId = (await _context.GetUserAsync(User.Identity)).Id,
+                    Title = newsArticleVM.Title,
+                    TextData = newsArticleVM.TextData,
+                    HeadImagePath = saveImagePath,
+                    CreatedDate = DateTimeOffset.UtcNow,
+                    EditDate = DateTimeOffset.UtcNow,
+                    IsDeleted = false
+                };
+
+                if (ModelState.IsValid)
+                {
+                    _context.Add(newsArticle);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(newsArticle);
             }
-            return View(newsArticle);
+            catch(Exception ex) 
+            {
+                return NotFound(ex.ToString());
+            }
         }
 
         // GET: NewsArticles/Edit/5
@@ -97,7 +115,7 @@ namespace NewsApp.Controllers
                 return NotFound();
             }
 
-            var newsArticleViewModel = new NewsArticleViewModel()
+            var newsArticleViewModel = new NewsArticleEditViewModel()
             {
                 Title = newsArticle.Title,
                 TextData = newsArticle.TextData
@@ -110,7 +128,7 @@ namespace NewsApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Title,TextData")] NewsArticleViewModel newsArticleVM)
+        public async Task<IActionResult> Edit(string id, [Bind("Title,TextData")] NewsArticleEditViewModel newsArticleVM)
         {
             var newsArticle = await _context.NewsArticle.FindAsync(id);
             if(newsArticle == null)
