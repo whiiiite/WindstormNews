@@ -1,22 +1,25 @@
 ﻿@model NewsApp.Entities.Models.NewsArticle
+@using NewsApp.Extentions
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Localizer["details"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>@Localizer["details"]</h1>
 
 <div>
-    <h4>NewsArticle</h4>
+    <h4>@Localizer["news_article"]</h4>
     <hr />
     <dl class="column">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.HeadImagePath)
+            <span>@Localizer["image"]:</span>
         </dt>
         <dd class="col-sm-10">
             <img class="o-fit-contain h-312 w-312" 
-            src="~/@Model.HeadImagePath.Replace('\\', '/').Replace("wwwroot/", "")" />
+            src="~/@Model.HeadImagePath.FixImagePath()" />
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
@@ -51,6 +54,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">@Localizer["edit"]</a> |
+    <a asp-action="Index">@Localizer["back_to_list"]</a>
 </div>

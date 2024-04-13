@@ -1,5 +1,7 @@
 ﻿@model NewsApp.Entities.ViewModels.NewsArticleEditViewModel
 @using NewsApp.Extentions;
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
     ViewData["Title"] = "Edit";
@@ -26,10 +28,12 @@
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
                 <input type="file" asp-for="Image" class="form-control" />
-                <span>Current image: <img class="o-fit-contain w-312 h-312" 
-                    src="~/@Model.ImagePath.FixImagePath()" /></span>
+                <span>
+                    @Localizer["current_image"]:
+                    <img class="o-fit-contain w-312 h-312"
+                            src="~/@Model.ImagePath.FixImagePath()" /></span>
                     <br />
-                <span>Dont touch image if not need to change</span>
+                <span>@Localizer["dont_touch_image"]</span>
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,14 +42,14 @@
                 <span asp-validation-for="IsDeleted" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@Localizer["back_to_list"]</a>
 </div>
 
 @section Scripts {

@@ -1,14 +1,16 @@
 ﻿@model IEnumerable<NewsApp.Entities.Models.NewsArticle>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Localizer["index"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>@Localizer["index"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">@Localizer["createnew"]</a>
 </p>
 <table class="table">
     <thead>
@@ -44,9 +46,9 @@
                 @Html.DisplayFor(modelItem => item.IsDeleted)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
             </td>
         </tr>
 }
