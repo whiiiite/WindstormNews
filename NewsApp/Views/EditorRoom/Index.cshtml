@@ -52,3 +52,18 @@
 }
     </tbody>
 </table>
+
+@{
+    int totalPages = (int)Math.Ceiling((double)ViewBag.ArticlesCount / ViewBag.PageSize);
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

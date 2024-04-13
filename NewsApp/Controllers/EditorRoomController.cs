@@ -23,6 +23,7 @@ namespace NewsApp.Controllers
     public class EditorRoomController : Controller
     {
         private readonly NewsAppContext _context;
+        private const int pageSize = 25;
 
         public EditorRoomController(NewsAppContext context)
         {
@@ -30,11 +31,20 @@ namespace NewsApp.Controllers
         }
 
         // GET: NewsArticles
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
             var segments = HttpContext.Request.Path.Value.Split('/');
+
+            ViewBag.CurrentPage = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.ArticlesCount = await _context.NewsArticle.CountAsync();
+
             return _context.NewsArticle != null ? 
-                          View(await _context.NewsArticle.ToListAsync()) :
+                          View(await _context.NewsArticle
+                          .OrderByDescending(x=>x.CreatedDate)
+                          .Skip((page - 1) * pageSize) 
+                          .Take(pageSize)
+                          .ToListAsync()) :
                           Problem("Entity set 'NewsAppContext.NewsArticle'  is null.");
         }
 
@@ -118,7 +128,9 @@ namespace NewsApp.Controllers
             var newsArticleViewModel = new NewsArticleEditViewModel()
             {
                 Title = newsArticle.Title,
-                TextData = newsArticle.TextData
+                TextData = newsArticle.TextData,
+                ImagePath = newsArticle.HeadImagePath,
+                IsDeleted = newsArticle.IsDeleted
             };
             return View(newsArticleViewModel);
         }
@@ -128,7 +140,8 @@ namespace NewsApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Title,TextData")] NewsArticleEditViewModel newsArticleVM)
+        public async Task<IActionResult> Edit(string id, 
+            [Bind("Title, TextData, Image, IsDeleted")] NewsArticleEditViewModel newsArticleVM)
         {
             var newsArticle = await _context.NewsArticle.FindAsync(id);
             if(newsArticle == null)
@@ -139,6 +152,15 @@ namespace NewsApp.Controllers
             newsArticle.Title = newsArticleVM.Title;
             newsArticle.TextData = newsArticleVM.TextData;
             newsArticle.EditDate = DateTimeOffset.UtcNow;
+            newsArticle.IsDeleted = newsArticleVM.IsDeleted;
+
+            IFormFile? headerImage = newsArticleVM.Image;
+            if(headerImage != null)
+            {
+                string saveImagePath = Path.Combine(Defaults.ArticleHeaderImagesPath, headerImage.FileName);
+                await FileHelper.CopyFileAsync(headerImage, saveImagePath);
+                newsArticle.HeadImagePath = saveImagePath;  
+            }
 
             if (id != newsArticle.Id)
             {
