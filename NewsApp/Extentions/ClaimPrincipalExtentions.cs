@@ -8,7 +8,7 @@ namespace NewsApp.Extentions
         /// Indicates if user IsAuthenticated
         /// </summary>
         /// <param name="claimsPrincipal"></param>
-        /// <returns></returns>
+        /// <returns>if user is Authenticated</returns>
         public static bool IsAuthenticated(this ClaimsPrincipal claimsPrincipal)
         {
             if (claimsPrincipal.Identity == null)
@@ -20,7 +20,6 @@ namespace NewsApp.Extentions
             {
                 return false;
             }
-
             return true;
         }
     }
