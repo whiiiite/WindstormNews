@@ -1,0 +1,28 @@
+﻿@model NewsApp.Entities.Models.NewsArticle
+@using NewsApp.Extentions
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["details"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-center flex-column">
+    <div class="text-center">
+        <img class="o-fit-contain" width="218" height="218" src="~/@Model.HeadImagePath.FixImagePath()" />
+    </div>
+    <div class="text-center">
+        <h2>
+            @Model.Title
+        </h2>
+    </div>
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="w-75">
+            @Model.TextData
+        </div>
+    </div>
+</div>
+<div style="margin-top: 100px;">
+    <a asp-action="Index">@Localizer["back_to_list"]</a>
+</div>

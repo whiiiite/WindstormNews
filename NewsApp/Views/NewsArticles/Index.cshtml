@@ -1,0 +1,42 @@
+﻿@model IEnumerable<NewsApp.Entities.Models.NewsArticle>
+@using NewsApp.Extentions
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["index"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Localizer["index"]</h1>
+<div class="d-flex align-items-center justify-content-center flex-column">
+@foreach (var item in Model) {
+    <div class="d-flex align-items-center justify-content-center flex-column">
+        <div>
+                <img class="o-fit-contain" width="512" height="512" src="~/@item.HeadImagePath.FixImagePath()" />
+        </div>
+        <div>
+            <h2>
+                <a asp-action="Details" asp-route-id="@item.Id">
+                    @item.Title
+                </a>
+            </h2>
+        </div>
+    </div>
+}
+</div>
+
+@{
+    int totalPages = (int)Math.Ceiling((double)ViewBag.ArticlesCount / ViewBag.PageSize);
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

@@ -37,7 +37,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["home"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-action="Index" asp-controller="EditorRoom">@Localizer["news"]</a>
+                            <a class="nav-link text-dark" asp-action="Index" asp-controller="NewsArticles">@Localizer["news"]</a>
                         </li>
                         @if (User.IsAuthenticated() == false)
                         {

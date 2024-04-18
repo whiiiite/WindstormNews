@@ -11,7 +11,6 @@ using NewsApp.Entities.Models;
 using NewsApp.Middleware;
 using NewsApp.Repositories;
 using System.Globalization;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace NewsApp
 {
