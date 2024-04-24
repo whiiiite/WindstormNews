@@ -9,6 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+appsettings.*
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -17,6 +18,7 @@
 mono_crash.*
 
 # Build results
+images/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
