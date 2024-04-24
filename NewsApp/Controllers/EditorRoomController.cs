@@ -82,6 +82,11 @@ namespace NewsApp.Controllers
         {
             try
             {
+                if(!Directory.Exists(Defaults.ArticleHeaderImagesPath))
+                {
+                    Directory.CreateDirectory(Defaults.ArticleHeaderImagesPath);
+                }
+
                 IFormFile headerImage = newsArticleVM.HeaderImage;
                 string saveImagePath = Path.Combine(Defaults.ArticleHeaderImagesPath, headerImage.FileName);
                 await FileHelper.CopyFileAsync(newsArticleVM.HeaderImage, saveImagePath);
