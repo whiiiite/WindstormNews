@@ -53,7 +53,7 @@
                             if(await userManager.IsInRoleAsync(await context.GetUserAsync(User.Identity), "Editor"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-action="Index" asp-controller="EditorRoom">@Localizer["articles"]</a>
+                                    <a class="nav-link text-dark" asp-action="Index" asp-controller="EditorRoom">@Localizer["editor_room"]</a>
                                 </li>
                             }
                             <li class="nav-item">

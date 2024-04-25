@@ -7,20 +7,27 @@
     ViewData["Title"] = Localizer["details"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="d-flex justify-content-center flex-column">
-    <div class="text-center">
-        <img class="o-fit-contain" width="218" height="218" src="~/@Model.HeadImagePath.FixImagePath()" />
-    </div>
-    <div class="text-center">
-        <h2>
-            @Model.Title
-        </h2>
-    </div>
-    <div class="d-flex align-items-center justify-content-center">
-        <div class="w-75" style="white-space:pre-line">
-            @Model.TextData
+<div class="d-flex flex-row w-100">
+    <div class="d-flex justify-content-center flex-column">
+        <div class="text-center">
+            <div>
+                <img class="o-fit-contain" width="218" height="218" src="~/@Model.HeadImagePath.FixImagePath()" />
+            </div>
         </div>
+        <div class="d-flex align-items-center justify-content-center">
+            <h2 class="w-75">
+                @Model.Title
+            </h2>
+        </div>
+        <div class="d-flex align-items-center justify-content-center">
+            <div class="w-75" style="white-space:pre-line">
+                @Model.TextData
+            </div>
+        </div>
+    </div>
+
+    <div id="sideBar">
+
     </div>
 </div>
 <div style="margin-top: 100px;">
