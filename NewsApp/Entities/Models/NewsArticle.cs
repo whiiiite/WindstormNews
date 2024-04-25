@@ -9,9 +9,11 @@ namespace NewsApp.Entities.Models
         public string Id { get; set; }
         public required string Title { get; set; }
         public required string HeadImagePath { get; set; }
-        public string TextData { get; set; }
+        public required string TextData { get; set; }
         public required DateTimeOffset CreatedDate { get; set; }
         public required DateTimeOffset EditDate { get; set; }
+        public required string CategoryId { get; set; }
+        public Category Category { get; set; }
         /// <summary>
         /// Id of writer of article
         /// </summary>

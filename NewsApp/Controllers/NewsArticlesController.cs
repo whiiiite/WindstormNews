@@ -48,6 +48,7 @@ namespace NewsApp.Controllers
 
             var newsArticle = await _context.NewsArticle
                 .Include(n => n.User)
+                .Include(n => n.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (newsArticle == null)
             {

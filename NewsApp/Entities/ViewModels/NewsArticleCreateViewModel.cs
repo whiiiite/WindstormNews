@@ -4,6 +4,7 @@
     {
         public required string Title { get; set; }
         public required IFormFile HeaderImage { get; set; }
+        public required string CategoryId { get; set; }
         public required string TextData { get; set; }
     }
 }

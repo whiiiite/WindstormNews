@@ -97,6 +97,7 @@ namespace NewsApp.Controllers
                     Title = newsArticleVM.Title,
                     TextData = newsArticleVM.TextData,
                     HeadImagePath = saveImagePath,
+                    CategoryId = newsArticleVM.CategoryId,
                     CreatedDate = DateTimeOffset.UtcNow,
                     EditDate = DateTimeOffset.UtcNow,
                     IsDeleted = false
@@ -134,6 +135,7 @@ namespace NewsApp.Controllers
             {
                 Title = newsArticle.Title,
                 TextData = newsArticle.TextData,
+                CategoryId = newsArticle.CategoryId,
                 ImagePath = newsArticle.HeadImagePath,
                 IsDeleted = newsArticle.IsDeleted
             };
@@ -146,7 +148,8 @@ namespace NewsApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, 
-            [Bind("Title, TextData, Image, IsDeleted")] NewsArticleEditViewModel newsArticleVM)
+            [Bind("Title, TextData, Image, CategoryId, IsDeleted")] 
+        NewsArticleEditViewModel newsArticleVM)
         {
             var newsArticle = await _context.NewsArticle.FindAsync(id);
             if(newsArticle == null)
@@ -156,8 +159,9 @@ namespace NewsApp.Controllers
 
             newsArticle.Title = newsArticleVM.Title;
             newsArticle.TextData = newsArticleVM.TextData;
-            newsArticle.EditDate = DateTimeOffset.UtcNow;
+            newsArticle.CategoryId = newsArticleVM.CategoryId;
             newsArticle.IsDeleted = newsArticleVM.IsDeleted;
+            newsArticle.EditDate = DateTimeOffset.UtcNow;
 
             IFormFile? headerImage = newsArticleVM.Image;
             if(headerImage != null)

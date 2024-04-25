@@ -23,5 +23,6 @@ namespace NewsApp.Data
         }
 
         public DbSet<NewsArticle> NewsArticle { get; set; } = default!;
+        public DbSet<Category> Categories { get; set; } = default!;
     }
 }
