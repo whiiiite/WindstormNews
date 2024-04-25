@@ -1,2 +1,7 @@
 ﻿body {
 }
+
+
+img {
+    pointer-events: none;
+}

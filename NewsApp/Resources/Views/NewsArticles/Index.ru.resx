@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="category" xml:space="preserve">
+    <value>Категория</value>
+  </data>
   <data name="createnew" xml:space="preserve">
     <value>Создать</value>
   </data>
@@ -131,5 +134,23 @@
   </data>
   <data name="index" xml:space="preserve">
     <value>Новости</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Жизнь</value>
+  </data>
+  <data name="Politics" xml:space="preserve">
+    <value>Политика</value>
+  </data>
+  <data name="s" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Sport" xml:space="preserve">
+    <value>Спорт</value>
+  </data>
+  <data name="write_by" xml:space="preserve">
+    <value>Написал(-a)</value>
+  </data>
+  <data name="write_date" xml:space="preserve">
+    <value>Дата написания</value>
   </data>
 </root>

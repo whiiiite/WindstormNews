@@ -120,6 +120,9 @@
   <data name="back_to_list" xml:space="preserve">
     <value>Вернуться к списку</value>
   </data>
+  <data name="category" xml:space="preserve">
+    <value>Категории</value>
+  </data>
   <data name="create" xml:space="preserve">
     <value>Создать</value>
   </data>

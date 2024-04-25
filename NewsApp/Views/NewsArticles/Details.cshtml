@@ -7,6 +7,12 @@
     ViewData["Title"] = Localizer["details"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section AddToHead {
+    <link rel="stylesheet" href="~/css/articles/details.css" asp-append-version="true" />
+}
+
+
 <div class="d-flex flex-row w-100">
     <div class="d-flex justify-content-center flex-column">
         <div class="text-center">

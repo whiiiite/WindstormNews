@@ -24,13 +24,14 @@ namespace NewsApp.Controllers
         // GET: NewsArticles
         public async Task<IActionResult> Index(int page = 1)
         {
-            var newsAppContext = _context.NewsArticle.Include(n => n.User);
+            var newsAppContext = _context.NewsArticle.Include(n => n.User)
+                .Include(n => n.Category);
 
             ViewBag.CurrentPage = page;
             ViewBag.PageSize = pageSize;
             ViewBag.ArticlesCount = await _context.NewsArticle.CountAsync();
 
-            return View(await _context.NewsArticle.
+            return View(await newsAppContext.
                            Where(x => x.IsDeleted == false)
                           .OrderByDescending(x => x.CreatedDate)
                           .Skip((page - 1) * pageSize)

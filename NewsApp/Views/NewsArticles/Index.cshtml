@@ -8,19 +8,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section AddToHead {
+    <link rel="stylesheet" href="~/css/articles/index.css" asp-append-version="true" />
+}
+
 <h1>@Localizer["index"]</h1>
 <div class="d-flex align-items-center justify-content-center flex-column">
 @foreach (var item in Model) {
-    <div class="d-flex align-items-center justify-content-center flex-column">
+    <div class="shadow-article d-flex align-items-center justify-content-center flex-column">
         <div>
-                <img class="o-fit-contain" width="512" height="512" src="~/@item.HeadImagePath.FixImagePath()" />
+            <img class="o-fit-contain" width="312" height="312" src="~/@item.HeadImagePath.FixImagePath()" />
         </div>
         <div>
-            <h2>
+            <h3>
                 <a asp-action="Details" asp-route-id="@item.Id">
                     @item.Title
                 </a>
-            </h2>
+            </h3>
+        </div>
+        <div class="d-flex flex-column">
+            <span class="simple-text">@Localizer["category"]: @Localizer[item.Category.Name]</span>
+            <span class="simple-text">@Localizer["write_date"]: @item.CreatedDate.Date.ToString("dd.MM.yyyy")</span>
+            @if (string.IsNullOrWhiteSpace(item.User.FirstName))
+            {
+                <span class="simple-text">@Localizer["write_by"]: @item.User.UserName</span>
+            }
+            else
+            {
+                <span class="simple-text">@Localizer["write_by"]: @(item.User.FirstName + ' ' + @item.User.LastName)</span>
+            }
         </div>
     </div>
 }

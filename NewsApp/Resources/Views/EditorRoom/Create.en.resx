@@ -120,6 +120,9 @@
   <data name="back_to_list" xml:space="preserve">
     <value>Back to list</value>
   </data>
+  <data name="category" xml:space="preserve">
+    <value>Category</value>
+  </data>
   <data name="create" xml:space="preserve">
     <value>Create</value>
   </data>

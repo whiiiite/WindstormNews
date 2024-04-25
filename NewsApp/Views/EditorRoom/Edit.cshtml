@@ -13,7 +13,7 @@
 
 <h4>NewsArticle</h4>
 <hr />
-<div class="row">
+<div class="d-flex flex-column">
     <div class="col-md-4">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div class="form-group">
@@ -21,9 +21,9 @@
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="TextData" class="control-label"></label>
-                <textarea asp-for="TextData" class="form-control"></textarea>
+            <div class="d-flex flex-column form-group">
+                <label class="control-label">Text:</label>
+                <textarea asp-for="TextData" style="min-height:200px; resize: both;" ></textarea>
                 <span asp-validation-for="TextData" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -37,8 +37,8 @@
                 <span>@Localizer["dont_touch_image"]</span>
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
+            <div class="d-flex form-group">
+                <label class="control-label">Category:</label>
                 <select name="CategoryId" asp-for="CategoryId" required>
                     @foreach (var item in context.Categories.Where(x => !x.IsDeprecated))
                     {
