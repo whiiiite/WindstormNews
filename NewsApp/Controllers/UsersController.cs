@@ -6,22 +6,23 @@ using NewsApp.Entities.Models;
 using System.Security.Claims;
 using NewsApp.Entities.ViewModels;
 using NewsApp.Repositories.Users;
+using NewsApp.Services.Users;
 
 namespace NewsApp.Controllers
 {
     public class UsersController : Controller
     {
         private readonly UserManager<User> userManager;
-        private readonly IUserRepository userRepository;
+        private readonly IUsersService usersService;
         private readonly ILogger<UsersController> logger;
 
         public UsersController(ILogger<UsersController> logger,
         UserManager<User> userManager,
-        IUserRepository userRepository)
+        IUsersService usersService)
         {
             this.logger = logger;
             this.userManager = userManager;
-            this.userRepository = userRepository;
+            this.usersService = usersService;
         }
 
         [HttpGet]
@@ -57,7 +58,7 @@ namespace NewsApp.Controllers
         [HttpPost]
         public async Task<ActionResult> SignUp([FromForm] SignUpViewModel signUpUserData)
         {
-            IEnumerable<IdentityError> errors = await userRepository.CreateUserAsync(signUpUserData);
+            IEnumerable<IdentityError> errors = await usersService.CreateUserAsync(signUpUserData);
             if (errors.Any())
             {
                 string errorDescription = errors.ToList().First().Description;
@@ -102,7 +103,7 @@ namespace NewsApp.Controllers
                 return false;
             }
 
-            User? user = await userRepository.GetUserAsync(x => x.Email == login.Email);
+            User? user = await usersService.GetUserAsync(x => x.Email == login.Email);
 
             if (user == null)
             {

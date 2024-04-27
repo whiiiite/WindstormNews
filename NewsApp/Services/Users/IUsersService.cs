@@ -4,11 +4,10 @@ using NewsApp.Entities.ViewModels;
 using System.Linq.Expressions;
 using System.Security.Principal;
 
-namespace NewsApp.Repositories.Users
+namespace NewsApp.Services.Users
 {
-    public interface IUserRepository
+    public interface IUsersService
     {
-
         /// <summary>
         /// Creates user in db
         /// </summary>
@@ -24,6 +23,13 @@ namespace NewsApp.Repositories.Users
         /// <param name="identity"></param>
         /// <returns></returns>
         public Task<User?> GetUserAsync(IIdentity? identity);
+        /// <summary>
+        /// Get user id by its identity
+        /// </summary>
+        /// <param name="identity"></param>
+        /// <returns></returns>
+        /// <exception cref="NullReferenceException"></exception>
+        public Task<string?> GetUserIdAsync(IIdentity? identity);
         /// <summary>
         /// Finds user in db by predicate
         /// </summary>

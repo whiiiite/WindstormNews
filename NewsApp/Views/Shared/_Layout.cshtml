@@ -2,6 +2,7 @@
 @using NewsApp.Extentions;
 @using NewsApp.Entities.Models;
 @using Microsoft.AspNetCore.Mvc.Localization
+@using NewsApp.Shared
 @inject NewsApp.Data.NewsAppContext context;
 @inject UserManager<NewsApp.Entities.Models.User> userManager;
 @inject IViewLocalizer Localizer;
@@ -56,7 +57,7 @@
                         }
                         else
                         {
-                            if (await userManager.IsInRoleAsync(user, "Editor"))
+                            if (await userManager.IsInRoleAsync(user, Defaults.EditorRole) || await userManager.IsInRoleAsync(user, Defaults.ChiefEditorRole))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-action="Index" asp-controller="EditorRoom">@Localizer["editor_room"]</a>

@@ -12,6 +12,7 @@ using NewsApp.Middleware;
 using NewsApp.Repositories.NewsArticles;
 using NewsApp.Repositories.Users;
 using NewsApp.Services.NewsArticles;
+using NewsApp.Services.Users;
 using System.Globalization;
 
 namespace NewsApp
@@ -58,6 +59,7 @@ namespace NewsApp
             builder.Services.AddScoped<INewsArticlesRepository, NewsArticlesRepository>();
             builder.Services.AddScoped<INewsArticlesService, NewsArticlesService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUsersService, UsersService>();
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>

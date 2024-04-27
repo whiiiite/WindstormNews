@@ -14,11 +14,6 @@ namespace NewsApp.Repositories.Users
         readonly NewsAppContext context;
         readonly UserManager<User>? userManager;
 
-        //public UserRepository(XstorageDbContext context)
-        //{
-        //    this.context = context;
-        //}
-
         public UserRepository(NewsAppContext context, UserManager<User> userManager)
         {
             this.context = context;
@@ -46,8 +41,6 @@ namespace NewsApp.Repositories.Users
             {
                 context.Users.Update(user);
                 await context.SaveChangesAsync();
-
-                user = await userManager.FindByEmailAsync(userData.Email);
             }
 
             return res.Errors;
@@ -68,22 +61,6 @@ namespace NewsApp.Repositories.Users
             }
 
             return await context.GetUserAsync(identity);
-        }
-
-        /// <summary>
-        /// Get user id by its identity
-        /// </summary>
-        /// <param name="identity"></param>
-        /// <returns></returns>
-        /// <exception cref="NullReferenceException"></exception>
-        public async Task<string> GetUserIdAsync(IIdentity? identity)
-        {
-            if (identity == null)
-            {
-                throw new ArgumentNullException("IIdentity is null");
-            }
-
-            return (await context.GetUserAsync(identity))?.Id;
         }
 
         /// <summary>
