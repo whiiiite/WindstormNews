@@ -5,19 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 using NewsApp.Entities.Models;
 using System.Security.Claims;
 using NewsApp.Entities.ViewModels;
-using NewsApp.Repositories;
+using NewsApp.Repositories.Users;
 
 namespace NewsApp.Controllers
 {
     public class UsersController : Controller
     {
         private readonly UserManager<User> userManager;
-        private readonly UserRepository userRepository;
+        private readonly IUserRepository userRepository;
         private readonly ILogger<UsersController> logger;
 
         public UsersController(ILogger<UsersController> logger,
         UserManager<User> userManager,
-        UserRepository userRepository)
+        IUserRepository userRepository)
         {
             this.logger = logger;
             this.userManager = userManager;

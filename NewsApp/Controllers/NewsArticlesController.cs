@@ -8,35 +8,31 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NewsApp.Data;
 using NewsApp.Entities.Models;
+using NewsApp.Repositories.NewsArticles;
+using NewsApp.Services.NewsArticles;
 
 namespace NewsApp.Controllers
 {
     public class NewsArticlesController : Controller
     {
+        private readonly INewsArticlesService newsArticlesService;
         private readonly NewsAppContext _context;
         private const int pageSize = 25;
 
-        public NewsArticlesController(NewsAppContext context)
-        {
+        public NewsArticlesController(NewsAppContext context, INewsArticlesService newsArticlesService)
+        { 
             _context = context;
+            this.newsArticlesService = newsArticlesService;
         }
 
         // GET: NewsArticles
         public async Task<IActionResult> Index(int page = 1)
         {
-            var newsAppContext = _context.NewsArticle.Include(n => n.User)
-                .Include(n => n.Category);
-
             ViewBag.CurrentPage = page;
             ViewBag.PageSize = pageSize;
-            ViewBag.ArticlesCount = await _context.NewsArticle.CountAsync();
+            ViewBag.ArticlesCount = await newsArticlesService.CountArticlesAsync(predicate: null);
 
-            return View(await newsAppContext.
-                           Where(x => x.IsDeleted == false)
-                          .OrderByDescending(x => x.CreatedDate)
-                          .Skip((page - 1) * pageSize)
-                          .Take(pageSize)
-                          .ToListAsync());
+            return View(await newsArticlesService.GetArticlesAsync(pageSize, page));
         }
 
         // GET: NewsArticles/Details/5
@@ -47,10 +43,7 @@ namespace NewsApp.Controllers
                 return NotFound();
             }
 
-            var newsArticle = await _context.NewsArticle
-                .Include(n => n.User)
-                .Include(n => n.Category)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var newsArticle = await newsArticlesService.GetArticleByIdAsync(id);
             if (newsArticle == null)
             {
                 return NotFound();

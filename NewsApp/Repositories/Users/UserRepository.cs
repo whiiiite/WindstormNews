@@ -7,9 +7,9 @@ using System.Linq.Expressions;
 using System.Security.Principal;
 using NewsApp.Entities.ViewModels;
 
-namespace NewsApp.Repositories
+namespace NewsApp.Repositories.Users
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         readonly NewsAppContext context;
         readonly UserManager<User>? userManager;
