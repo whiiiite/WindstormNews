@@ -19,7 +19,7 @@ using NewsApp.Shared.FileSystem;
 namespace NewsApp.Controllers
 {
     [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, 
-        Roles = $"{Defaults.EditorRole},{Defaults.ChiefEditorRole},{Defaults.OwnerRole}")]
+        Roles = $"{RoleNames.Editor},{RoleNames.ChiefEditor},{RoleNames.Owner}")]
     public class EditorRoomController : Controller
     {
         private readonly NewsAppContext _context;
