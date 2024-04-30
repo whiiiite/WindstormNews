@@ -25,7 +25,6 @@ namespace NewsApp.Controllers
             this.newsArticlesService = newsArticlesService;
         }
 
-        // GET: NewsArticles
         public async Task<IActionResult> Index(int page = 1)
         {
             ViewBag.CurrentPage = page;
@@ -35,7 +34,6 @@ namespace NewsApp.Controllers
             return View(await newsArticlesService.GetArticlesAsync(pageSize, page));
         }
 
-        // GET: NewsArticles/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null || _context.NewsArticle == null)
