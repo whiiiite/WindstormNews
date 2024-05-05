@@ -4,16 +4,24 @@
 @{
 }
 
-<form method="post" asp-action="AddUserToRole">
-    <div class="form-group">
+<form class="d-flex flex-column w-50" method="post" asp-action="AddUserToRole">
+    <div class="form-group d-flex flex-column">
         <label asp-for="UserEmail" class="control-label"></label>
         <input asp-for="UserEmail" name="UserEmail" class="form-control" required />
         <span asp-validation-for="UserEmail" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="UserEmail" class="control-label"></label>
-        <input asp-for="UserEmail" name="UserEmail" class="form-control" required />
-        <span asp-validation-for="UserEmail" class="text-danger"></span>
+    <div class="form-group d-flex flex-column mt-3">
+        <label class="control-label">Role: </label>
+        <select name="RoleName" asp-for="RoleName" required>
+            @foreach (var item in context.Roles)
+            {
+                <option value="@item.Name">@item.Name</option>
+            }
+        </select>
+        <span asp-validation-for="RoleName" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <input type="submit" value="Change role" class="btn btn-primary" />
     </div>
 </form>
 <div asp-validation-summary="All" class="text-danger"></div>

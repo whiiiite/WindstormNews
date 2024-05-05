@@ -3,6 +3,6 @@
     public class UserToRoleViewModel
     {
         public required string UserEmail { get; set; }
-        public required string RoleId { get; set; }
+        public required string RoleName { get; set; }
     }
 }

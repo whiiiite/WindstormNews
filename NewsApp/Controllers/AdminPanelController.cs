@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using NewsApp.Data;
+using NewsApp.Entities.Models;
 using NewsApp.Entities.ViewModels;
+using NewsApp.Repositories.Users;
 
 namespace NewsApp.Controllers
 {
@@ -8,6 +12,16 @@ namespace NewsApp.Controllers
     /// </summary>
     public class AdminPanelController : Controller
     {
+        private readonly NewsAppContext _context;
+        private readonly IUserRepository _userRepository;
+        private readonly UserManager<User> _userManager;
+        public AdminPanelController(NewsAppContext context, IUserRepository userRepository, UserManager<User> userManager)
+        {
+            _context = context;
+            _userRepository = userRepository;
+            _userManager = userManager;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -21,9 +35,18 @@ namespace NewsApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddUserToRole([Bind("UserEmail, RoleId")]UserToRoleViewModel model)
+        public async Task<IActionResult> AddUserToRole([Bind("UserEmail, RoleName")]UserToRoleViewModel model)
         {
-            return View();
+            User? user = await _userRepository.GetUserAsync(x => x.Email == model.UserEmail);
+            if (user == null)
+            {
+                ModelState.AddModelError("user_ne", "User does not exists");
+                return View(model);
+            }
+
+            await _userManager.AddToRoleAsync(user, model.RoleName);
+
+            return View(nameof(Index));
         }
     }
 }
