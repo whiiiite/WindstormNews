@@ -6,6 +6,7 @@ using NewsApp.Data;
 using NewsApp.Entities.Models;
 using NewsApp.Entities.ViewModels;
 using NewsApp.Repositories.Users;
+using NewsApp.Services.AdminPanelServices;
 using NewsApp.Shared;
 using System.Data;
 
@@ -20,12 +21,12 @@ namespace NewsApp.Controllers
     {
         private readonly NewsAppContext _context;
         private readonly IUserRepository _userRepository;
+        private readonly IAdminPanelService _adminPanelService;
         private readonly UserManager<User> _userManager;
-        public AdminPanelController(NewsAppContext context, IUserRepository userRepository, UserManager<User> userManager)
+        public AdminPanelController(NewsAppContext context, IAdminPanelService adminPanelService)
         {
             _context = context;
-            _userRepository = userRepository;
-            _userManager = userManager;
+            _adminPanelService = adminPanelService;
         }
 
         public IActionResult Index()
@@ -43,14 +44,12 @@ namespace NewsApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUserToRole([Bind("UserEmail, RoleName")]UserToRoleViewModel model)
         {
-            User? user = await _userRepository.GetUserAsync(x => x.Email == model.UserEmail);
-            if (user == null)
+            OperationResult result = await _adminPanelService.AddUserToRoleAsync(model);
+            if (!result.IsSuccess)
             {
-                ModelState.AddModelError("user_ne", "User does not exists");
+                ModelState.AddModelError("Isnotsuccess", result.Message);
                 return View(model);
             }
-
-            await _userManager.AddToRoleAsync(user, model.RoleName);
 
             return View(nameof(Index));
         }
@@ -64,14 +63,12 @@ namespace NewsApp.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveUserFromRole([Bind("UserEmail, RoleName")] UserToRoleViewModel model)
         {
-            User? user = await _userRepository.GetUserAsync(x => x.Email == model.UserEmail);
-            if (user == null)
+            OperationResult result = await _adminPanelService.RemoveUserFromRoleAsync(model);
+            if (!result.IsSuccess)
             {
-                ModelState.AddModelError("user_ne", "User does not exists");
+                ModelState.AddModelError("Isnotsuccess", result.Message);
                 return View(model);
             }
-
-            await _userManager.RemoveFromRoleAsync(user, model.RoleName);
 
             return View(nameof(Index));
         }

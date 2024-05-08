@@ -9,8 +9,10 @@ using Microsoft.Extensions.Options;
 using NewsApp.Data;
 using NewsApp.Entities.Models;
 using NewsApp.Middleware;
+using NewsApp.Repositories.AdminPanelRepos;
 using NewsApp.Repositories.NewsArticles;
 using NewsApp.Repositories.Users;
+using NewsApp.Services.AdminPanelServices;
 using NewsApp.Services.NewsArticles;
 using NewsApp.Services.Users;
 using System.Globalization;
@@ -60,6 +62,8 @@ namespace NewsApp
             builder.Services.AddScoped<INewsArticlesService, NewsArticlesService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUsersService, UsersService>();
+            builder.Services.AddScoped<IAdminPanelRepository, AdminPanelRepository>();
+            builder.Services.AddScoped<IAdminPanelService, AdminPanelService>();
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
