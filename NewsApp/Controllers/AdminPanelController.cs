@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NewsApp.Data;
-using NewsApp.Entities.Models;
 using NewsApp.Entities.ViewModels;
-using NewsApp.Repositories.Users;
 using NewsApp.Services.AdminPanelServices;
 using NewsApp.Shared;
-using System.Data;
 
 namespace NewsApp.Controllers
 {
