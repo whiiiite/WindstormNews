@@ -20,9 +20,7 @@ namespace NewsApp.Controllers
     public class AdminPanelController : Controller
     {
         private readonly NewsAppContext _context;
-        private readonly IUserRepository _userRepository;
         private readonly IAdminPanelService _adminPanelService;
-        private readonly UserManager<User> _userManager;
         public AdminPanelController(NewsAppContext context, IAdminPanelService adminPanelService)
         {
             _context = context;

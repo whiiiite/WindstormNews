@@ -17,14 +17,14 @@ namespace NewsApp.Repositories.AdminPanelRepos
             _userManager = userManager;
         }
 
-        public Task<OperationResult> AddUserToRoleAsync(UserToRoleViewModel model)
+        public async Task<OperationResult> AddUserToRoleAsync(UserToRoleViewModel model)
         {
-            return _ChangeUserRoleStatus(model, isRemove: false);
+            return await _ChangeUserRoleStatus(model, isRemove: false);
         }
 
-        public Task<OperationResult> RemoveUserFromRoleAsync(UserToRoleViewModel model)
+        public async Task<OperationResult> RemoveUserFromRoleAsync(UserToRoleViewModel model)
         {
-            return _ChangeUserRoleStatus(model, isRemove: true);
+            return await _ChangeUserRoleStatus(model, isRemove: true);
         }
 
 
