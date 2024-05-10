@@ -1,8 +1,8 @@
-﻿@{
-}
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
-<h3>Admin panel</h3>
+<h3>@Localizer["apanel"]</h3>
 <div class="d-flex flex-column">
-    <a asp-action="AddUserToRole">Add user to role</a>
-    <a asp-action="RemoveUserFromRole">Remove user from role</a>
+    <a asp-action="AddUserToRole">@Localizer["add_user_to_role"]</a>
+    <a asp-action="RemoveUserFromRole">@Localizer["remove_user_from_role"]</a>
 </div>
