@@ -4,6 +4,7 @@
 @{
 }
 
+<h3>Remove from role</h3>
 <form class="d-flex flex-column w-50" method="post" asp-action="RemoveUserFromRole">
     <div class="form-group d-flex flex-column">
         <label asp-for="UserEmail" class="control-label"></label>
@@ -21,7 +22,7 @@
         <span asp-validation-for="RoleName" class="text-danger"></span>
     </div>
     <div class="form-group mt-3">
-        <input type="submit" value="Change role" class="btn btn-primary" />
+        <input type="submit" value="Remove role" class="btn btn-primary" />
     </div>
 </form>
 <div asp-validation-summary="All" class="text-danger"></div>

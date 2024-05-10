@@ -6,5 +6,6 @@
         public const string ChiefEditor = "ChiefEditor";
         public const string Admin = "Administrator";
         public const string Owner = "Owner";
+        public const string Simple = "Simple";
     }
 }

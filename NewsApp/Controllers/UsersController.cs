@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using NewsApp.Entities.Models;
 using System.Security.Claims;
 using NewsApp.Entities.ViewModels;
-using NewsApp.Repositories.Users;
 using NewsApp.Services.Users;
-using NewsApp.Shared;
 
 namespace NewsApp.Controllers
 {

@@ -1,9 +1,11 @@
 ﻿@model NewsApp.Entities.ViewModels.UserToRoleViewModel;
+@using NewsApp.Shared;
 @inject NewsApp.Data.NewsAppContext context;
 
 @{
 }
 
+<h3>Add to role</h3>
 <form class="d-flex flex-column w-50" method="post" asp-action="AddUserToRole">
     <div class="form-group d-flex flex-column">
         <label asp-for="UserEmail" class="control-label"></label>
@@ -15,13 +17,17 @@
         <select name="RoleName" asp-for="RoleName" required>
             @foreach (var item in context.Roles)
             {
-                <option value="@item.Name">@item.Name</option>
+                if ((item?.Name?.ToLower() ?? string.Empty) == RoleNames.Simple.ToLower())
+                {
+                    continue;
+                }
+                <option value="@item?.Name">@item?.Name</option>
             }
         </select>
         <span asp-validation-for="RoleName" class="text-danger"></span>
     </div>
     <div class="form-group mt-3">
-        <input type="submit" value="Change role" class="btn btn-primary" />
+        <input type="submit" value="Add to role" class="btn btn-primary" />
     </div>
 </form>
 <div asp-validation-summary="All" class="text-danger"></div>

@@ -12,7 +12,7 @@ namespace NewsApp.Repositories.Users
     public class UserRepository : IUserRepository
     {
         readonly NewsAppContext context;
-        readonly UserManager<User>? userManager;
+        readonly UserManager<User> userManager;
 
         public UserRepository(NewsAppContext context, UserManager<User> userManager)
         {
@@ -35,15 +35,15 @@ namespace NewsApp.Repositories.Users
             user.Email = userData.Email;
             user.FirstName = string.Empty;
             user.LastName = string.Empty;
-            IdentityResult res = await userManager.CreateAsync(user, userData.Password);
+            IdentityResult identityResult = await userManager.CreateAsync(user, userData.Password);
 
-            if (!res.Errors.Any())
+            if (!identityResult.Errors.Any())
             {
                 context.Users.Update(user);
                 await context.SaveChangesAsync();
             }
 
-            return res.Errors;
+            return identityResult.Errors;
         }
 
 
