@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using NewsApp.Entities.Models;
-using System;
 
 namespace NewsApp.Configurations
 {

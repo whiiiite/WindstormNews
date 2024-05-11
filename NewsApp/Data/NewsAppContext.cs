@@ -20,6 +20,7 @@ namespace NewsApp.Data
             builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new NewsArticleConfiguration());
+            builder.ApplyConfiguration(new CategoryConfiguration());
         }
 
         public DbSet<NewsArticle> NewsArticle { get; set; } = default!;
