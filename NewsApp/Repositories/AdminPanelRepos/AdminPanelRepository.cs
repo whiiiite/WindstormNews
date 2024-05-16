@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using NewsApp.Data;
 using NewsApp.Entities.Models;
 using NewsApp.Entities.ViewModels;
 using NewsApp.Repositories.Users;
@@ -7,6 +6,9 @@ using NewsApp.Shared;
 
 namespace NewsApp.Repositories.AdminPanelRepos
 {
+    /// <summary>
+    /// Class that handles data over <b><see cref="NewsApp.Controllers.AdminPanelController"/></b>
+    /// </summary>
     public class AdminPanelRepository : IAdminPanelRepository
     {
         private readonly IUserRepository _userRepository;

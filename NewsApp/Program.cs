@@ -25,7 +25,8 @@ namespace NewsApp
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<NewsAppContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("NewsAppContext") ?? throw new InvalidOperationException("Connection string 'NewsAppContext' not found.")));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("NewsAppContext") ?? 
+                throw new InvalidOperationException("Connection string 'NewsAppContext' not found.")));
 
             builder.Services.AddIdentityCore<User>(options => {
                 options.SignIn.RequireConfirmedAccount = true;
@@ -73,7 +74,6 @@ namespace NewsApp
                 options.AccessDeniedPath = "/Forbidden/";
             });
 
-            builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             // Add services to the container.
             builder.Services.AddControllersWithViews()

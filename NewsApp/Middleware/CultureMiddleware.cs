@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using NewsApp.Shared;
+﻿using NewsApp.Shared;
 using System.Globalization;
-using System.Threading.Tasks;
 
 namespace NewsApp.Middleware
 {

@@ -9,6 +9,9 @@ using NewsApp.Entities.ViewModels;
 
 namespace NewsApp.Repositories.Users
 {
+    /// <summary>
+    /// Class that handles operations over data of User model and controller
+    /// </summary>
     public class UserRepository : IUserRepository
     {
         readonly NewsAppContext context;

@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NewsApp.Data;
 using NewsApp.Entities.Models;
-using System.Drawing.Printing;
 using System.Linq.Expressions;
 
 namespace NewsApp.Repositories.NewsArticles
 {
+    /// <summary>
+    /// Class that handles operation over data of News Articles
+    /// </summary>
     public class NewsArticlesRepository : INewsArticlesRepository
     {
         readonly NewsAppContext context;

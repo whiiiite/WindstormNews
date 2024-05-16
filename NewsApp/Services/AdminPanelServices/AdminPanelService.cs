@@ -4,6 +4,9 @@ using NewsApp.Shared;
 
 namespace NewsApp.Services.AdminPanelServices
 {
+    /// <summary>
+    /// Service of admin panel that handles logic
+    /// </summary>
     public class AdminPanelService : IAdminPanelService
     {
         private readonly IAdminPanelRepository adminPanelRepository;

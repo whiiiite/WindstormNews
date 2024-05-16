@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NewsApp.Data;
 using NewsApp.Entities.Models;
@@ -108,7 +101,7 @@ namespace NewsApp.Controllers
             }
             catch(Exception ex) 
             {
-                return NotFound(ex.ToString());
+                return NotFound(ex.Message);
             }
         }
 
@@ -140,7 +133,7 @@ namespace NewsApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, 
             [Bind("Title, TextData, Image, CategoryId, IsDeleted")] 
-        NewsArticleEditViewModel newsArticleVM)
+            NewsArticleEditViewModel newsArticleVM)
         {
             var newsArticle = await _context.NewsArticle.FindAsync(id);
             if(newsArticle == null)
