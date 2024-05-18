@@ -17,6 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Repositories\EditorRoomRepositories\" />
+    <Folder Include="Services\EditorRoomServices\" />
     <Folder Include="wwwroot\images\innews\" />
     <Folder Include="wwwroot\images\newsheaders\" />
   </ItemGroup>
