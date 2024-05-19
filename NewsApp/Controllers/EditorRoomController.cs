@@ -6,6 +6,7 @@ using NewsApp.Data;
 using NewsApp.Entities.Models;
 using NewsApp.Entities.ViewModels;
 using NewsApp.Extentions;
+using NewsApp.Repositories.EditorRoomRepositories;
 using NewsApp.Shared;
 using NewsApp.Shared.FileSystem;
 
@@ -16,11 +17,13 @@ namespace NewsApp.Controllers
     public class EditorRoomController : Controller
     {
         private readonly NewsAppContext _context;
+        private readonly IEditorRoomRepository editorRoomRepository;
         private const int pageSize = 25;
 
-        public EditorRoomController(NewsAppContext context)
+        public EditorRoomController(NewsAppContext context, IEditorRoomRepository editorRoomRepository)
         {
             _context = context;
+            this.editorRoomRepository = editorRoomRepository;
         }
 
         // GET: NewsArticles
@@ -32,13 +35,7 @@ namespace NewsApp.Controllers
             ViewBag.PageSize = pageSize;
             ViewBag.ArticlesCount = await _context.NewsArticle.CountAsync();
 
-            return _context.NewsArticle != null ? 
-                          View(await _context.NewsArticle
-                          .OrderByDescending(x=>x.CreatedDate)
-                          .Skip((page - 1) * pageSize) 
-                          .Take(pageSize)
-                          .ToListAsync()) :
-                          Problem("Entity set 'NewsAppContext.NewsArticle'  is null.");
+            return View(await editorRoomRepository.GetArticlesAsync(pageSize, page));
         }
 
         public async Task<IActionResult> Details(string id)
@@ -48,8 +45,7 @@ namespace NewsApp.Controllers
                 return NotFound();
             }
 
-            var newsArticle = await _context.NewsArticle
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var newsArticle = await editorRoomRepository.GetArticleAsync(id);
             if (newsArticle == null)
             {
                 return NotFound();
@@ -70,33 +66,25 @@ namespace NewsApp.Controllers
         {
             try
             {
-                if(!Directory.Exists(Defaults.ArticleHeaderImagesPath))
+                string userId = (await _context.GetUserAsync(User.Identity)).Id;
+                OperationResult result = await editorRoomRepository.CreateArticleAsync(newsArticleVM, ModelState, userId);
+                if (result.IsSuccess)
                 {
-                    Directory.CreateDirectory(Defaults.ArticleHeaderImagesPath);
+                    return RedirectToAction(nameof(Index));
                 }
-
-                IFormFile headerImage = newsArticleVM.HeaderImage;
-                string saveImagePath = Path.Combine(Defaults.ArticleHeaderImagesPath, headerImage.FileName);
-                await FileHelper.CopyFileAsync(newsArticleVM.HeaderImage, saveImagePath);
 
                 NewsArticle newsArticle = new NewsArticle()
                 {
                     UserId = (await _context.GetUserAsync(User.Identity)).Id,
                     Title = newsArticleVM.Title,
                     TextData = newsArticleVM.TextData,
-                    HeadImagePath = saveImagePath,
+                    HeadImagePath = string.Empty,
                     CategoryId = newsArticleVM.CategoryId,
                     CreatedDate = DateTimeOffset.UtcNow,
                     EditDate = DateTimeOffset.UtcNow,
                     IsDeleted = false
                 };
 
-                if (ModelState.IsValid)
-                {
-                    _context.Add(newsArticle);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
                 return View(newsArticle);
             }
             catch(Exception ex) 
@@ -112,7 +100,7 @@ namespace NewsApp.Controllers
                 return NotFound();
             }
 
-            var newsArticle = await _context.NewsArticle.FindAsync(id);
+            var newsArticle = await editorRoomRepository.GetArticleAsync(id);
             if (newsArticle == null)
             {
                 return NotFound();
@@ -135,8 +123,8 @@ namespace NewsApp.Controllers
             [Bind("Title, TextData, Image, CategoryId, IsDeleted")] 
             NewsArticleEditViewModel newsArticleVM)
         {
-            var newsArticle = await _context.NewsArticle.FindAsync(id);
-            if(newsArticle == null)
+            var newsArticle = await editorRoomRepository.GetArticleAsync(id);
+            if (newsArticle == null)
             {
                 return NotFound();
             }
@@ -190,8 +178,7 @@ namespace NewsApp.Controllers
                 return NotFound();
             }
 
-            var newsArticle = await _context.NewsArticle
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var newsArticle = await editorRoomRepository.GetArticleAsync(id);
             if (newsArticle == null)
             {
                 return NotFound();
@@ -204,17 +191,11 @@ namespace NewsApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (_context.NewsArticle == null)
+            OperationResult result = await editorRoomRepository.DeleteArticleAsync(id);
+            if (!result.IsSuccess)
             {
-                return Problem("Entity set 'NewsAppContext.NewsArticle'  is null.");
+                return NotFound(result.Message);
             }
-            var newsArticle = await _context.NewsArticle.FindAsync(id);
-            if (newsArticle != null)
-            {
-                _context.NewsArticle.Remove(newsArticle);
-            }
-            
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
