@@ -12,6 +12,7 @@ using NewsApp.Repositories.EditorRoomRepositories;
 using NewsApp.Repositories.NewsArticles;
 using NewsApp.Repositories.Users;
 using NewsApp.Services.AdminPanelServices;
+using NewsApp.Services.EditorRoomServices;
 using NewsApp.Services.NewsArticles;
 using NewsApp.Services.Users;
 using System.Globalization;
@@ -65,6 +66,7 @@ namespace NewsApp
             builder.Services.AddScoped<IAdminPanelRepository, AdminPanelRepository>();
             builder.Services.AddScoped<IAdminPanelService, AdminPanelService>();
             builder.Services.AddScoped<IEditorRoomRepository, EditorRoomRepository>();
+            builder.Services.AddScoped<IEditorRoomService, EditorRoomService>();
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>

@@ -7,6 +7,8 @@ using NewsApp.Entities.Models;
 using NewsApp.Entities.ViewModels;
 using NewsApp.Extentions;
 using NewsApp.Repositories.EditorRoomRepositories;
+using NewsApp.Services.EditorRoomServices;
+using NewsApp.Services.Users;
 using NewsApp.Shared;
 using NewsApp.Shared.FileSystem;
 
@@ -17,16 +19,17 @@ namespace NewsApp.Controllers
     public class EditorRoomController : Controller
     {
         private readonly NewsAppContext _context;
-        private readonly IEditorRoomRepository editorRoomRepository;
+        private readonly IEditorRoomService editorRoomService;
+        private readonly IUsersService usersService;
         private const int pageSize = 25;
 
-        public EditorRoomController(NewsAppContext context, IEditorRoomRepository editorRoomRepository)
+        public EditorRoomController(NewsAppContext context, IEditorRoomService editorRoomService, IUsersService usersService)
         {
             _context = context;
-            this.editorRoomRepository = editorRoomRepository;
+            this.editorRoomService = editorRoomService;
+            this.usersService = usersService;
         }
 
-        // GET: NewsArticles
         public async Task<IActionResult> Index(int page = 1)
         {
             var segments = HttpContext.Request.Path.Value.Split('/');
@@ -35,7 +38,7 @@ namespace NewsApp.Controllers
             ViewBag.PageSize = pageSize;
             ViewBag.ArticlesCount = await _context.NewsArticle.CountAsync();
 
-            return View(await editorRoomRepository.GetArticlesAsync(pageSize, page));
+            return View(await editorRoomService.GetArticlesAsync(pageSize, page));
         }
 
         public async Task<IActionResult> Details(string id)
@@ -45,7 +48,7 @@ namespace NewsApp.Controllers
                 return NotFound();
             }
 
-            var newsArticle = await editorRoomRepository.GetArticleAsync(id);
+            var newsArticle = await editorRoomService.GetArticleAsync(id);
             if (newsArticle == null)
             {
                 return NotFound();
@@ -67,7 +70,7 @@ namespace NewsApp.Controllers
             try
             {
                 string userId = (await _context.GetUserAsync(User.Identity)).Id;
-                OperationResult result = await editorRoomRepository.CreateArticleAsync(newsArticleVM, ModelState, userId);
+                OperationResult result = await editorRoomService.CreateArticleAsync(newsArticleVM, ModelState, userId);
                 if (result.IsSuccess)
                 {
                     return RedirectToAction(nameof(Index));
@@ -75,7 +78,7 @@ namespace NewsApp.Controllers
 
                 NewsArticle newsArticle = new NewsArticle()
                 {
-                    UserId = (await _context.GetUserAsync(User.Identity)).Id,
+                    UserId = await usersService.GetUserIdAsync(User.Identity),
                     Title = newsArticleVM.Title,
                     TextData = newsArticleVM.TextData,
                     HeadImagePath = string.Empty,
@@ -100,7 +103,7 @@ namespace NewsApp.Controllers
                 return NotFound();
             }
 
-            var newsArticle = await editorRoomRepository.GetArticleAsync(id);
+            var newsArticle = await editorRoomService.GetArticleAsync(id);
             if (newsArticle == null)
             {
                 return NotFound();
@@ -123,7 +126,7 @@ namespace NewsApp.Controllers
             [Bind("Title, TextData, Image, CategoryId, IsDeleted")] 
             NewsArticleEditViewModel newsArticleVM)
         {
-            var newsArticle = await editorRoomRepository.GetArticleAsync(id);
+            var newsArticle = await editorRoomService.GetArticleAsync(id);
             if (newsArticle == null)
             {
                 return NotFound();
@@ -178,7 +181,7 @@ namespace NewsApp.Controllers
                 return NotFound();
             }
 
-            var newsArticle = await editorRoomRepository.GetArticleAsync(id);
+            var newsArticle = await editorRoomService.GetArticleAsync(id);
             if (newsArticle == null)
             {
                 return NotFound();
@@ -191,7 +194,7 @@ namespace NewsApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            OperationResult result = await editorRoomRepository.DeleteArticleAsync(id);
+            OperationResult result = await editorRoomService.DeleteArticleAsync(id);
             if (!result.IsSuccess)
             {
                 return NotFound(result.Message);
