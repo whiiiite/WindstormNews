@@ -72,5 +72,16 @@ namespace NewsApp.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser([Bind("EmailOrUsername")] EmailOrUsernameViewModel emailOrUserNameVM)
+        {
+            OperationResult result = await _adminPanelService.DeleteUserAsync(emailOrUserNameVM, User.Identity);
+            if (!result.IsSuccess)
+            {
+                return NotFound(result.Message);
+            }
+            return View(nameof(Index));
+        }
     }
 }

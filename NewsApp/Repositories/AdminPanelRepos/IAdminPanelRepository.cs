@@ -1,4 +1,5 @@
-﻿using NewsApp.Entities.ViewModels;
+﻿using NewsApp.Entities.Models;
+using NewsApp.Entities.ViewModels;
 using NewsApp.Shared;
 
 namespace NewsApp.Repositories.AdminPanelRepos
@@ -17,5 +18,12 @@ namespace NewsApp.Repositories.AdminPanelRepos
         /// <param name="model"></param>
         /// <returns>Result of operation and its info</returns>
         public Task<OperationResult> RemoveUserFromRoleAsync(UserToRoleViewModel model);
+        /// <summary>
+        /// Deletes user by email or username
+        /// </summary>
+        /// <param name="emailOrUsername"></param>
+        /// <returns>Result of operation and its info</returns>
+        public Task<OperationResult> DeleteUserAsync(EmailOrUsernameViewModel emailOrUsername);
+        
     }
 }

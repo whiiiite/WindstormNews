@@ -30,5 +30,6 @@ namespace NewsApp.Repositories.Users
         /// <param name="predicate"></param>
         /// <returns></returns>
         public Task<User?> GetUserAsync(Expression<Func<User, bool>> predicate);
+        public Task<User?> FindUserByEmailOrUsernameAsync(EmailOrUsernameViewModel emailOrUsername);
     }
 }

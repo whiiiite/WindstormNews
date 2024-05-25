@@ -75,5 +75,15 @@ namespace NewsApp.Repositories.Users
         {
             return await context.Users.FirstOrDefaultAsync(predicate);
         }
+
+        public async Task<User?> FindUserByEmailOrUsernameAsync(EmailOrUsernameViewModel emailOrUsername)
+        {
+            User? user = await userManager.FindByEmailAsync(emailOrUsername.EmailOrUsername);
+            if (user == null)
+            {
+                user = await userManager.FindByNameAsync(emailOrUsername.EmailOrUsername);
+            }
+            return user;
+        }
     }
 }

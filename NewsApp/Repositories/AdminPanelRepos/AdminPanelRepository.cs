@@ -29,6 +29,27 @@ namespace NewsApp.Repositories.AdminPanelRepos
             return await _ChangeUserRoleStatus(model, isRemove: true);
         }
 
+        public async Task<OperationResult> DeleteUserAsync(EmailOrUsernameViewModel emailOrUsername)
+        {
+            User? user = await _userRepository.FindUserByEmailOrUsernameAsync(emailOrUsername);
+
+            if(user == null)
+            {
+                return OperationResult.IsNotSuccess("User was not found");
+            }
+
+            try
+            {
+                await _userManager.DeleteAsync(user);
+            }
+            catch(Exception ex)
+            {
+                return OperationResult.IsNotSuccess(ex.Message);
+            }
+
+            return OperationResult.SuccessInstance;
+        }
+
 
         private async Task<OperationResult> _ChangeUserRoleStatus(UserToRoleViewModel model, bool isRemove = false)
         {

@@ -5,10 +5,10 @@
 }
 
 <h3>@Localizer["DeleteLabel"]</h3>
-<form asp-action="DeleteUser">
+<form asp-action="DeleteUser" method="post">
     <div class="form-group d-flex flex-column">
         <label class="control-label">@Localizer["Input"]</label>
-        <input asp-for="EmailOrUsername" name="EmailOrUsername" class="form-control" required />
+        <input type="text" asp-for="EmailOrUsername" name="EmailOrUsername" class="form-control" required />
         <span asp-validation-for="EmailOrUsername" class="text-danger"></span>
     </div>
     <div class="form-group mt-3">
