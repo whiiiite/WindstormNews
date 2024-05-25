@@ -117,16 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="add_user_to_role" xml:space="preserve">
-    <value>Назначить пользователя на роль</value>
+  <data name="DeleteLabel" xml:space="preserve">
+    <value>Delete User</value>
   </data>
-  <data name="apanel" xml:space="preserve">
-    <value>Админ панель</value>
+  <data name="DeleteUserBtnText" xml:space="preserve">
+    <value>Delete</value>
   </data>
-  <data name="del_user" xml:space="preserve">
-    <value>Удалить пользователя</value>
-  </data>
-  <data name="remove_user_from_role" xml:space="preserve">
-    <value>Снять пользователя с роли</value>
+  <data name="Input" xml:space="preserve">
+    <value>Input Email or Username</value>
   </data>
 </root>

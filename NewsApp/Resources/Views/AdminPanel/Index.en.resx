@@ -123,6 +123,9 @@
   <data name="apanel" xml:space="preserve">
     <value>Admin panel</value>
   </data>
+  <data name="del_user" xml:space="preserve">
+    <value>Delete user</value>
+  </data>
   <data name="remove_user_from_role" xml:space="preserve">
     <value>Remove user from role</value>
   </data>
