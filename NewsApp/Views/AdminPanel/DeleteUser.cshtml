@@ -1,0 +1,16 @@
+﻿@model NewsApp.Entities.ViewModels.EmailOrUsernameViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+}
+
+<form asp-action="DeleteUser">
+    <div class="form-group d-flex flex-column">
+        <label class="control-label">Email or username:</label>
+        <input asp-for="EmailOrUsername" name="EmailOrUsername" class="form-control" required />
+        <span asp-validation-for="EmailOrUsername" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3">
+        <input type="submit" value="@Localizer["rmfrom"]" class="btn btn-primary" />
+    </div>
+</form>

@@ -66,5 +66,11 @@ namespace NewsApp.Controllers
 
             return View(nameof(Index));
         }
+
+        [HttpGet]
+        public IActionResult DeleteUser()
+        {
+            return View();
+        }
     }
 }
