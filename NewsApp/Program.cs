@@ -58,7 +58,6 @@ namespace NewsApp
                 options.SupportedUICultures = supportedCultures;
             });
 
-            builder.Services.AddScoped<UserRepository>();
             builder.Services.AddScoped<INewsArticlesRepository, NewsArticlesRepository>();
             builder.Services.AddScoped<INewsArticlesService, NewsArticlesService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
