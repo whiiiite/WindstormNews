@@ -76,7 +76,6 @@ namespace NewsApp
             });
 
 
-            // Add services to the container.
             builder.Services.AddControllersWithViews()
                 .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization(); ;
