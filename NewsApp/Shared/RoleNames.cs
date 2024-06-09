@@ -1,5 +1,8 @@
 ﻿namespace NewsApp.Shared
 {
+    /// <summary>
+    /// Class that contains names of roles in DB
+    /// </summary>
     public class RoleNames
     {
         public const string Editor = "Editor";

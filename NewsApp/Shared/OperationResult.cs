@@ -1,5 +1,8 @@
 ﻿namespace NewsApp.Shared
 {
+    /// <summary>
+    /// Class that represents some operation result. Success it or not
+    /// </summary>
     public class OperationResult
     {
         public bool IsSuccess { get; set; }
