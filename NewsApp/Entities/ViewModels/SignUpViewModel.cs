@@ -1,5 +1,8 @@
 ﻿namespace NewsApp.Entities.ViewModels
 {
+    /// <summary>
+    /// Class for sign up data from form or other source
+    /// </summary>
     public class SignUpViewModel
     {
         public required string UserName { get; set; }

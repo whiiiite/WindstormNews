@@ -1,5 +1,8 @@
 ﻿namespace NewsApp.Entities.ViewModels
 {
+    /// <summary>
+    /// Class for creationg data of News Article
+    /// </summary>
     public class NewsArticleCreateViewModel
     {
         public required string Title { get; set; }
