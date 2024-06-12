@@ -29,6 +29,18 @@ namespace NewsApp.Controllers
         }
 
 
+        public IActionResult CreateRole()
+        {
+            return View();
+        }
+
+
+        public IActionResult RemoveRole()
+        {
+            return View();
+        }
+
+
         [HttpGet]
         public IActionResult AddUserToRole()
         {
