@@ -4,6 +4,8 @@
 <h3>@Localizer["apanel"]</h3>
 <div class="d-flex flex-column">
     <div>Normal zone: </div>
+    <a asp-action="Index" class="mx-3">@Localizer["add_role"]</a>
+    <a asp-action="Index" class="mx-3">@Localizer["remove_role"]</a>
     <a asp-action="AddUserToRole" class="mx-3">@Localizer["add_user_to_role"]</a>
     <a asp-action="RemoveUserFromRole" class="mx-3">@Localizer["remove_user_from_role"]</a>
     <div class="text-danger mt-4">Danger zone: </div>

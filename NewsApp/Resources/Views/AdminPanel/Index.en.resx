@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="add_role" xml:space="preserve">
+    <value>Create new role</value>
+  </data>
   <data name="add_user_to_role" xml:space="preserve">
     <value>Add user to role</value>
   </data>
@@ -125,6 +128,9 @@
   </data>
   <data name="del_user" xml:space="preserve">
     <value>Delete user</value>
+  </data>
+  <data name="remove_role" xml:space="preserve">
+    <value>Remove existing role</value>
   </data>
   <data name="remove_user_from_role" xml:space="preserve">
     <value>Remove user from role</value>
