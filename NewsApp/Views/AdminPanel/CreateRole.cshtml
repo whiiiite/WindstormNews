@@ -1,5 +1,15 @@
 ﻿
 @{
 }
+@model NewsApp.Entities.ViewModels.CreateRoleViewModel
 
-<p>Remove role</p>
+<h3>Create new role</h3>
+<form class="d-flex flex-column w-50" asp-action="CreateRole" method="post">
+    <div class="form-group">
+        <label>Role name:</label>
+        <input class="form-control" name="RoleName" placeholder="Role name" />
+    </div>
+    <input class="btn btn-primary mt-3" type="submit" value="Create" />
+</form>
+
+<div class="text-danger">@Model.Error</div>

@@ -1,5 +1,22 @@
 ﻿
 @{
 }
+@inject NewsApp.Data.NewsAppContext dbcontext;
+@model NewsApp.Entities.ViewModels.RemoveRoleViewModel
 
-<p>Remove role</p>
+<h3>Remove role</h3>
+
+<form class="d-flex flex-column w-50" asp-action="RemoveRole" method="post">
+    <div class="form-group">
+        <label>Role name:</label>
+        <select class="form-control" required name="RoleName">
+            @foreach (var role in dbcontext.Roles)
+            {
+                <option>@role.Name</option>
+            }
+        </select>
+    </div>
+    <input class="btn btn-danger mt-3" type="submit" value="Remove" />
+</form>
+
+<div class="text-danger">@Model.Error</div>
